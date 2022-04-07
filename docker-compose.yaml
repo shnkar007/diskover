@@ -1,0 +1,21 @@
+version: "3"
+services:
+  diskover:
+    container_name: discover
+    image: diskover
+    restart:  "no"
+    build: ./
+    expose:
+      - 8761
+    ports:
+      - 8761:8761
+      - 8085:8085
+    networks:
+      - microservices_bridge
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://docker.host.internal:8671/eureka
+      EUREKA_CLIENT_SERVER_URL_CONTEXT: http://docker.host.internal:8761/eureka/
+      EUREKA_INSTANCE_PREFERIPADDRESS: "true"
+networks:
+    microservices_bridge:
+      driver: bridge
